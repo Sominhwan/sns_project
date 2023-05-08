@@ -388,9 +388,11 @@ c{
   	display:none;
 }
 .makevideoBackBtn{
-	height:20px;
-	padding-left:235px;
-	padding-top:10px
+	position: relative;
+    height: 20px;
+    left: -250px;
+    padding-top: 10px;
+
 }
 .videotitle{
 	text-align:center;
@@ -530,17 +532,20 @@ c{
   	display:none;
 }
 .postcomtitle{
-	margin-left:-20px;
-	margin-right:60px;
-	padding-top:30px;
+	position: relative;
+	left: -20px;
+	top: 10px;
 }
 .makepostComple{
-	margin-left:270px;
-	padding-top:150px;
+	margin-left:267px;
+	padding-top:140px;
 }
 .bodycomple{
-	padding-left:235px;
-	padding-top:60px;
+	position: relative;
+	left:230px;
+	top:20px;
+	color: #303030;
+	font-size: 15px;
 }
 .makepostCheck{
 	padding-left:225px;

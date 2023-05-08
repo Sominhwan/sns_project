@@ -16,9 +16,9 @@ UserinfoBean bean = mgr.getMember(email);
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link type="text/css" rel="stylesheet" href="css/navbar.css"></link>
 <link rel="stylesheet" href="./css/email.css" />
 <link rel="stylesheet" href="./css/profile.css"/>
-<link rel="stylesheet" href="./css/modal.css"/>
 <style>
 		body {
 			overflow: hidden;
@@ -26,6 +26,7 @@ UserinfoBean bean = mgr.getMember(email);
 	</style>
 <title>이메일 인증</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="js/navbar.js"></script>
 <script>
 	function frmSubmit() {
 		document.userInfo_frm.submit();
@@ -54,52 +55,56 @@ UserinfoBean bean = mgr.getMember(email);
     />
 </head>
 <body>
-<nav>
-      <div class="navbar">
-        <img src="./images/mainLogo.png" alt="Image Button" />
-        <a id="PhoTalk" class="navbar-brand" href="profile.html">PhoTalk</a>
-        <span><input class="InputBase" placeholder="검색" /></span>
-        <img
-          id="mainMessageFalse"
-          src="./images/mainMessageFalse.png"
-          alt="Image Button"
-        />
-        <img
-          id="mainAlarmFalse"
-          src="./images/mainAlarmFalse.png"
-          alt="Image Button"
-        />
-        <img
-          id="mainProfile2"
-          src="./images/mainProfile2.png"
-          alt="Image Button"
-        />
-      </div>
-    </nav>
-    <!-- 모달창 -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modal-body">
-    <a href =profile.jsp style="text-decoration: none; color: black;"><img class= "Profile"src="./images/mainProfileModalProfile.svg"><span class="Profile-T">프로필 보기</span></a>
-    <a href =update.jsp style="text-decoration: none; color: black;"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"><span class="Info-T">개인 정보</span><br></a>
-    <a href =help.jsp style="text-decoration: none; color: black;"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T">도움말</span><br></a>
-    <a href =login.jsp style="text-decoration: none; color: black;"><img class= "Logout" src="./images/mainProfileModalLogout.svg"><span class="Logout-T">로그아웃</span><br></a>
-  </div>
-  </div>
-</div>
-		<script>
-		// 모달창 보이기
-		document.getElementById("mainProfile2").addEventListener("click", function() {
-		  document.getElementById("modal").style.display = "block";
-		});
-		// 모달창 외부를 클릭하면 모달창 닫기
-		window.onclick = function(event) {
-		  if (event.target == document.getElementById("modal")) {
-		    document.getElementById("modal").style.display = "none";
-		  }
-		}
-		</script>
+    <nav>
+    <div class = "navbar">
+        <img src="images/mainLogo.png" alt="Image Button"/>
+	    <a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
+	    <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
+	    	    
+	    <form method="post" id="navSearch" >
+        	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
+        	<input type="text" style="display:none;"/>
+        </form>
+        <!-- 모달창 -->
+        <div class="absol">
+        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <div id="alarm" class="alarm">
+        <span class="alarmBalloon"></span>
+        </div>
+        </div>             
+        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
+    </div>	   
+</nav>
+    <!-- 검색 창 -->
+    <!-- 네브바 추가할것 !!!! -->
+	<table class="userTable" id="userTable">
+		<tbody id="ajaxTable">
+	          	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>
+	<!-- 프로필 모달 -->
+	<table class="profile-modal" id="profile-modal" style="display: none">
+		<tbody id="innerProfile">
+			<tr onclick="location.href='profile.jsp'">
+				<td class="profile-td"><img class= "Profile"src="./images/mainProfileModalProfile.svg"></td>
+				<td class="profile-td2">프로필 보기</td>		
+    		</tr>   	   				
+			<tr onclick="location.href='update.jsp'">
+				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
+				<td class="profile-td2">개인 정보</td>		
+    		</tr> 		
+			<tr>
+				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
+				<td class="profile-td2">도움말</td>		
+    		</tr> 	
+			<tr>
+				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg"></td>
+				<td class="profile-td2">로그아웃</td>		
+    		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>  
+
 <div class=parent> 
 	<span class="Text-Info">개인 정보</span>
 	<span class="Text-Update">탈퇴하기</span>

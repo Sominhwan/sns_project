@@ -31,6 +31,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="./images/mainLogo.png" />
     <link href="profile.css" rel="stylesheet" type="text/css"/>
     <link type="text/css" rel="stylesheet" href="style.css"></link>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <!-- Cropper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css"
+    />    
     <!-- 네브바 추가할것 !!!! -->
     <link type="text/css" rel="stylesheet" href="css/navbar.css"></link>
     <link type="text/css" rel="stylesheet" href="css/sidebar.css"></link>
@@ -188,40 +197,53 @@
         <% } %>
    </table> --%>
 <!-- 화면꺼지게 -->
-
 <div class="overlay">
 	<!-- 만들기모달 -->
 	<div class="makemodal">
 		<div class="maketexttitle">
 				<b>게시물 만들기</b><img src="./img/makePostCancelBtn.svg" class="makecancel">	
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<img src="./img/makePostImage.svg" class="imageposition">
 			<img src="./img/makePostVideo.svg" class="imageposition2"><br>
 			<h5 class="makebodytext">사진과 동영상을 선택하세요</h5>
-			<img src="./img/makePostSelectImage.svg" class="imageposition3">
-			<img src="./img/makePostSelectVideo.svg" class="imageposition4">
+			<img src="./img/makePostSelectImage.svg" class="imageposition3" style="cursor: pointer;">
+			<img src="./img/makePostSelectVideo.svg" class="imageposition4" style="cursor: pointer;">
 		</div> 				
   	</div>
   	<!-- 편집하기모달 -->
   	<form name="postFrm" method="post" action="PostInsertServlet" enctype="multipart/form-data" >
+  	<input type="hidden" name="userEmail" value="<%=mbean.getUserEmail()%>">
   	<div class="fixmodal">
 		<div class="maketexttitle">
-		&nbsp;&nbsp;<b>편집하기</b><img src="./img/makePostBackBtn.svg" class="makeBackBtn">
+		&nbsp;&nbsp;<b>편집하기</b><img src="./img/makePostBackBtn.svg" class="makeBackBtn" style="cursor: pointer;">
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
-			<b class="makepostBefore">Before</b>
-			<b class="makepostAfter">After</b>
-			<div class="choicepicture">
-				<!-- 크롭될이미지 -->
-				<input type="file" accept="image/*" class="imageInput" name="imageName">
+		    <img src="./img/makePostImage.svg" class="makePostImage">
+			<b class="makepostBefore" style="display: none">Before</b>
+			<b class="makepostAfter" style="display: none">After</b>
+			<!-- 크롭될이미지 -->
+			<div class="filebox">
+				<label for="imageInput">사진 선택</label> 
+		    	<input type="file" accept="image/*" class="imageInput" name="imageName" id="imageInput">		
+		    </div>	
+			<div class="choicepicture" style="display: none">
+				<div class="result"></div>
 			</div>
-			<div class="choiceafterpicture">
-        			<img id="croppedImage" src="" alt="Cropped Image">
+			<div class="choiceafterpicture" style="display: none">
+				<img class="cropped" src="./img/binImage.svg" alt="" />	
 			</div>
-			<img src="./img/makePostInsertBtn.svg" class="makepostInsert">
+			<!-- input file -->
+      		<div class="box" style="display: none">
+        		<div class="options hide">
+          		<input type="number" class="img-w" value="300" min="100" max="400" style="display: none"/>
+        		</div>
+        		<!-- save btn -->
+        		<button class="btn save hide" id="saveBtn" style="border-radius: 5px;cursor: pointer;">저장하기</button>
+      		</div>
+			<img src="./img/makePostInsertBtn.svg" class="makepostInsert" style="display: none">
 		</div>				
   	</div>
   	</form>
@@ -229,9 +251,9 @@
   	<form name="videoFrm" method="post" action="VideoPostInsertServlet" enctype="multipart/form-data" >
   	<div class="videomodal">
 		<div class="maketexttitle">
-		&nbsp;&nbsp;<b>동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn">
+			<b style="position:relative;  margin-left: 10px;">동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn" style="cursor: pointer;">
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<h5 class="videotitle">동영상을 선택하세요</h5>
 			<div class="choicevideo">
@@ -246,16 +268,17 @@
 		<div class="maketexttitle">
 			<b class="postcomtitle">게시물이 올라갔습니다.</b>
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<img src="./img/makePostCheckIcon.svg" class="makepostComple">
 			<br>
-			<b class="bodycomple">게시물이 올라갔습니다.</b>
+			<span class="bodycomple">게시물이 올라갔습니다.</span>
 			<br>
-			<img src="./img/makePostCheckBtn.svg" class="makepostCheck">
+			<img src="./img/makePostCheckBtn.svg" class="makepostCheck" style="cursor: pointer;">
 		</div>				
   	</div>
 </div>
-<script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script> 
+	<script src="js/main.js"></script>
 </body>
 </html>

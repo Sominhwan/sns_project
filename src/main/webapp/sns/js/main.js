@@ -565,8 +565,7 @@
 				    contentType: false,
 				    processData: false,
 				    success: function(result) {
-				    	console.log("main에서작용");
-				        location.reload();
+				        //location.reload();
 				    },   
 				    error: function(xhr, status, error) {
 				    }
@@ -588,6 +587,7 @@
  			overlay.style.display = 'none';
  			$(".makeimage").attr("src", "./images/mainMakePostFalse.png");
  			postcomplete.style.display='none';
+ 			location.reload();
  		})
  		//영상
  		document.addEventListener('DOMContentLoaded', function() {

@@ -364,7 +364,6 @@
 	
 </div>
 <!-- 화면꺼지게 -->
-
 <div class="overlay">
 	<!-- 만들기모달 -->
 	<div class="makemodal">
@@ -419,9 +418,9 @@
   	<form name="videoFrm" method="post" action="VideoPostInsertServlet" enctype="multipart/form-data" >
   	<div class="videomodal">
 		<div class="maketexttitle">
-		&nbsp;&nbsp;<b>동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn">
+			<b style="position:relative;  margin-left: 10px;">동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn" style="cursor: pointer;">
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<h5 class="videotitle">동영상을 선택하세요</h5>
 			<div class="choicevideo">
@@ -436,13 +435,13 @@
 		<div class="maketexttitle">
 			<b class="postcomtitle">게시물이 올라갔습니다.</b>
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<img src="./img/makePostCheckIcon.svg" class="makepostComple">
 			<br>
-			<b class="bodycomple">게시물이 올라갔습니다.</b>
+			<span class="bodycomple">게시물이 올라갔습니다.</span>
 			<br>
-			<img src="./img/makePostCheckBtn.svg" class="makepostCheck">
+			<img src="./img/makePostCheckBtn.svg" class="makepostCheck" style="cursor: pointer;">
 		</div>				
   	</div>
 </div>
@@ -453,7 +452,7 @@
     <span>공유하기</span>
     <div class="sharecancel">x</div>
   </div>
-  <hr>
+  <hr style="background: #d8d8d8;height: 1px;border:0;">
   	<a href="#" class="naver-share-link" target="_blank" alt="Share on Naver">
   		<img src="./img/postShareNaver.jpg" class="postShareNaver" />
 	</a>

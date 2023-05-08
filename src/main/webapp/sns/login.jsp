@@ -88,7 +88,6 @@
       
       
    		if(<%=userEmailCertification%>==1){
-   			alert('이메일 검증 확인');
    			/* 메인 화면 링크 추가 */
    			document.loginOk_frm.submit(); 	
    		}else{

@@ -360,10 +360,10 @@ a#update2{
 
 .side-bar{
     position:fixed;
-        width: 360px;
-        height: 1000px;
-        background-color: #e0e0e0;
-        z-index: -10;
+    width: 360px;
+    height: 1000px;
+    background-color: #e0e0e0;
+    z-index: -10;
  
 }
 

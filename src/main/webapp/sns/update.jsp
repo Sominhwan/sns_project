@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="./css/update.css" />
     <link rel="stylesheet" href="./css/modal.css" />
     <script src="js/navbar.js"></script>
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
     <style>
 		body {
 			overflow: hidden;
@@ -57,27 +58,35 @@
       <a href="update1.jsp" id="update2">수정하기</a>
     </div>
 	
-	<nav>
-    	<div class = "navbar">
-         	<a href="javascript:goURL('Main.jsp','')"><img src="./images/mainLogo.png"  alt="Image Button"/></a>
-	     	<a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
-	        <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>	     	
-	     	<!-- 네브바 추가할것 !!!! -->
-		    <form method="post" action="searched.jsp">
-	        	<span><input type="text" class = "InputBase" placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
-	        </form>
-	        <!-- 모달창 -->
-	        <div class="absol">
-	        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
-	        <div id="alarm" class="alarm">
-	        <span class="alarmBalloon"></span>
-	        </div>
-	        </div>             
-	        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
-	    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
-    	</div>
-	</nav>
-
+    <nav>
+    <div class = "navbar">
+        <img src="images/mainLogo.png" alt="Image Button"/>
+	    <a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
+	    <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
+	    	    
+	    <form method="post" id="navSearch" >
+        	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
+        	<input type="text" style="display:none;"/>
+        </form>
+        <!-- 모달창 -->
+        <div class="absol">
+        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <div id="alarm" class="alarm">
+        <span class="alarmBalloon"></span>
+        </div>
+        </div>             
+        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
+    </div>	   
+</nav>
+    <!-- 검색 창 -->
+    <!-- 네브바 추가할것 !!!! -->
+	<table class="userTable" id="userTable">
+		<tbody id="ajaxTable">
+	          	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>
+    
     <span class="Text-Name1"> <%=bean.getUserName() %> </span>
     <span class="Text-Nickname1"><%=bean.getUserNickName() %></span>
     <span class="Text-Email1"><%=bean.getUserEmail() %></span>
@@ -94,7 +103,27 @@
   text-align: left;
   font-weight: norma;
   color: var(--black); " ><%=bean.getUserSocial() %></span>
-	
+	<!-- 프로필 모달 -->
+	<table class="profile-modal" id="profile-modal" style="display: none">
+		<tbody id="innerProfile">
+			<tr onclick="location.href='profile.jsp'">
+				<td class="profile-td"><img class= "Profile"src="./images/mainProfileModalProfile.svg"></td>
+				<td class="profile-td2">프로필 보기</td>		
+    		</tr>   	   				
+			<tr onclick="location.href='update.jsp'">
+				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
+				<td class="profile-td2">개인 정보</td>		
+    		</tr> 		
+			<tr>
+				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
+				<td class="profile-td2">도움말</td>		
+    		</tr> 	
+			<tr>
+				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg"></td>
+				<td class="profile-td2">로그아웃</td>		
+    		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>	
 	<div class="go-update">
       <a href="update.jsp" id="go" style="
     z-index: 200;
