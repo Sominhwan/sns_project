@@ -77,16 +77,18 @@ button, button:focus {
 
 #search {
   width: 100%;
-  border: 1px solid #bbb;
-  border-radius: 8px;
+  border: solid 1px #e7e7e7;
+  background-color: #f8f8f8;
+  border-radius: 20.5px;
   padding: 10px 12px;
   font-size: 14px;
 }
 
 .chatContent{
   width: 80%;
-  border: 1px solid #bbb;
-  border-radius: 8px;
+  border: solid 1px #e7e7e7;
+  background-color: #f8f8f8;
+  border-radius: 19.5px;
   padding: 10px 12px;
   font-size: 14px;
 }

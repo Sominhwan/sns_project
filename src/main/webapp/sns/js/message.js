@@ -246,7 +246,7 @@ function addInviteList(name,image,Email){
 	$('#inviteFollow').append(
 		'<div id="inviteList" style="height:55px;">'+
 		'<div id= "imgarea" style="float:left";width: 55px; height:55px;>'+
-		'<img src = "'+image+'" style="width: 55px; height:55px; border-radius:50%;">'+
+		'<img src = "'+image+'" style="width: 55px; height:55px; border-radius:50%; object-fit: cover;">'+
 		'</div>'+
 		'<div id="email" style="margin-left:63px">'+
 		name+
@@ -263,7 +263,7 @@ function addRoomId(roomId,Email,image,name){
   console.log(roomId);
   $('#chatRoomList').append(
 	'<div id ="'+Email+'profileImg" style = "float:left; width: 58px; height:58px;">' +
-	'<img src = "'+image+'" style = "border-radius : 50%; width: 58px; height:58px; border: solid 2px #dedede;">'+
+	'<img src = "'+image+'" style = "border-radius : 50%; width: 58px; height:58px; border: solid 2px #dedede; object-fit: cover;">'+
 	'</div>' +
     '<div id="'+roomId+'" class="'+name+'" onclick="handleChatClick(event)" style = "margin-left:80px; cursor: pointer">'+
     '<div id="roomName">'+name+ 
@@ -613,7 +613,7 @@ function chat(Email) {
         <div id="chatList">
         </div>
         <div class="sendMsgBox">
-             <hr style="background-color: rgba(0,0,0,0.1); border:none; height : 3px;">
+             <hr style="background-color: rgba(0,0,0,0.1); border:none; height : 3px; ">
          	 <div class="msgBox">
  			 <input type="text" class="chatContent" id="chatContent" onkeyup="if(window.event.keyCode==13){semdMsg()}">
  			 <button type="button" class="semdMsgButton" id ="semdMsgButton" onclick="semdMsg()"><img id="messageSendInsertIcon"src="images/messageSendInsertIcon.svg" ></button>
@@ -664,7 +664,7 @@ function addFollowerList(name,image,Email){
 	$('#followerList').append(
 		'<div id="'+name+'invite" style="height:55px;">'+
 		'<div id= "imgarea" style="float:left";width: 55px; height:55px;>'+
-		'<img src = "'+image+'" style="width: 55px; height:55px; border-radius:50%;">'+
+		'<img src = "'+image+'" style="width: 55px; height:55px; border-radius:50%; object-fit: cover;">'+
 		'</div>'+
 		'<div id="email" style="margin-left:63px">'+
 		name+

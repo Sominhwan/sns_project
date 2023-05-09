@@ -287,7 +287,7 @@
 		<tr>
 			<td width="250" style="padding-left:10px;"><%=uibean.getUserNickName() %>님 외 <b><%=pbean.getLikeNum() %>명</b>이 좋아합니다.</td>
 		</tr>
-		<tr class="commenter" stlye="height:<%=commentCount*50%>px;">
+		<tr class="commenter" style="height:<%=commentCount*50%>px;">
 			<td colspan="3" width="500" style="padding-left:10px;"> 
 				<%
 				for(int j=0;j<clist.size();j++){

@@ -2,12 +2,12 @@
 <%@page import="sns.UserinfoBean"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id="mgr" class="sns.UserMgr" />
-
+<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
 <%
 String Name = (String) session.getAttribute("idKey");
 String email = (String)session.getAttribute("userEmail");
 UserinfoBean bean = mgr.getMember(email);
-
+UserinfoBean mbean = umgr.getPMember(email);
 %>
 
 <!DOCTYPE html>
@@ -19,6 +19,7 @@ UserinfoBean bean = mgr.getMember(email);
 <link type="text/css" rel="stylesheet" href="css/navbar.css"></link>
 <link rel="stylesheet" href="./css/email.css" />
 <link rel="stylesheet" href="./css/profile.css"/>
+<link rel="stylesheet" href="css/message.css?after"/>
 <style>
 		body {
 			overflow: hidden;
@@ -67,12 +68,12 @@ UserinfoBean bean = mgr.getMember(email);
         </form>
         <!-- 모달창 -->
         <div class="absol">
-        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
         <div id="alarm" class="alarm">
         <span class="alarmBalloon"></span>
         </div>
         </div>             
-        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
     	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     </div>	   
 </nav>
@@ -231,4 +232,10 @@ UserinfoBean bean = mgr.getMember(email);
 </body>
 
 <script src="./js/email.js"></script>
+<script src="js/message.js"></script>
+<script>
+    window.onload = function() {
+    	ready('<%=email%>','<%=mbean.getUserName()%>');
+    };
+</script>
 </html>

@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="sns.UserinfoBean"%>
 <jsp:useBean id="mgr" class="sns.UserMgr"/>
-
+<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
 <%
 request.setCharacterEncoding("UTF-8");  
 	String Name = (String)session.getAttribute("idKey");
@@ -12,6 +12,7 @@ request.setCharacterEncoding("UTF-8");
 		userInfoType = "1";
 	}
 	System.out.print(userInfoType);
+	UserinfoBean mbean = umgr.getPMember(email);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
 %>
 
 <!DOCTYPE html>
@@ -24,6 +25,7 @@ request.setCharacterEncoding("UTF-8");
     <link rel="stylesheet" href="./css/update1.css" />
     <link rel="stylesheet" href="./css/profile.css"/>
     <link rel="stylesheet" href="./css/modal.css"/>
+    <link rel="stylesheet" href="css/message.css?after"/>
     <title>회원 정보 변경</title>
     <link
       rel="shortcut icon"
@@ -112,12 +114,12 @@ request.setCharacterEncoding("UTF-8");
 	        </form>
 	        <!-- 모달창 -->
 	        <div class="absol">
-	        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+	       <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
 	        <div id="alarm" class="alarm">
 	        <span class="alarmBalloon"></span>
 	        </div>
 	        </div>             
-	        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+	        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
 	    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     	</div>
 	</nav>
@@ -339,6 +341,12 @@ position:absolute;
       </div>
     </footer>
     
+	<script src="js/message.js"></script>    
+	<script>
+	    window.onload = function() {
+	    	ready('<%=email%>','<%=mbean.getUserName()%>');
+	    };
+	</script>    
   </body>
 
 

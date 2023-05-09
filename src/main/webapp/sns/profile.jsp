@@ -1,3 +1,5 @@
+<%@page import="sns.CommentBean"%>
+<%@page import="sns.PostBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Vector"%>
 <%@page import="sns.UserinfoBean"%>
@@ -9,6 +11,13 @@
 <jsp:useBean id = "pmgr" class = "sns.ProfileMgr"/>
 <jsp:useBean id="mgr" class="sns.UserinfoMgr"/>
 
+
+<%-- <jsp:useBean id="umgr" class="sns.UserinfoMgr"/> --%>
+<jsp:useBean id="cmgr" class="sns.CommentMgr"/>
+<jsp:useBean id="fmgr" class="sns.FriemdmanagerMgr"/>
+<jsp:useBean id="plmgr" class="sns.PostlikeMgr"/>
+<jsp:useBean id="pomgr" class="sns.PostMgr"/>
+
 <%
 		String id= request.getParameter("id");
 		if (id == null || id.trim().equals("")){
@@ -16,6 +25,11 @@
 		}
 		String id2 = (String)session.getAttribute("userEmail");
 		UserinfoBean mbean = mgr.getPMember(id2);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
+		
+		Vector<UserinfoBean> uilist = mgr.listPMember(id2);//본인을 제외한 5명리스트 불러오기(유저이메일 별명,유저이미지저장)
+		Vector<PostBean> uplist=pomgr.pPrivatelist(id2);//postId 내림차순으로 전체글 다가져오기		
+		
+		
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +42,7 @@
     <link rel="stylesheet" href="css/sidebar.css"/>    
     <link rel="stylesheet" href="css/profile2.css?after"/>
     <link rel="stylesheet" href="css/message.css?after"/>   
-    <link type="text/css" rel="stylesheet" href="style.css"></link>     
+    <!-- <link type="text/css" rel="stylesheet" href="style.css"></link> -->     
     <link rel="shortcut icon" type="image/x-icon" href="images/mainLogo.png" />
     <link
       rel="stylesheet"
@@ -515,8 +529,160 @@
                 </div>
             </div>
         </div>
+     
+        
+        
     </div>
 </div>
+
+        
+     <%
+				for(int i=0;i<uplist.size();i++){
+					PostBean pbean = uplist.get(i);
+					UserinfoBean uibean = mgr.getPMember(pbean.getUserEmail());
+					Vector<CommentBean> clist = cmgr.listPReply(pbean.getPostId());
+					int commentCount = clist.size();
+	%>	
+    <div class="ccc">
+    <table>
+		<tr style="width: 517px; display: inline-block;">
+			<td style="padding-left: 10px; width: 50px;">
+				<div class="box3" style="display: inline-block;">
+					<img class="profile" src="<%=uibean.getUserImage()%>">
+					
+				</div>
+						
+			</td>
+			<td style="width: 100px">
+			<div style="font-size: 15px; color: #303030; display: inline-block;"><b><%=uibean.getUserNickName()%></b></div>
+			</td>		
+			<td>
+				<a href="javascript:hamberger('<%=pbean.getUserEmail()%>')" class="ham" style="margin-left: 320px;">
+					<img src="./img/postCategory.svg">				
+				</a>
+			</td>
+			
+		</tr>
+		<tr>
+			<td colspan="3" style="border-bottom: solid 1px #eee;"	>
+			<!-- 이미지가 null이면 영상불러오기 -->
+				<%if (pbean.getImageName() == null || pbean.getImageName().equals("NULL")){ %>
+					<embed src="photo/<%=pbean.getVideoName()%>" width="535" height="480">
+				<%} else {%>
+					<img src="photo/<%=pbean.getImageName()%>" width="535" height="480">
+				<%} %>
+			</td>
+		</tr>
+		<tr style="float:left; height: 25px; padding-top: 15px;">
+			<td style="padding-left: 10px;">
+				<%if (plmgr.postLike(mbean.getUserEmail(), pbean.getPostId())){ %>
+					<a href="javascript:heartdel('<%=pbean.getPostId()%>,<%=mbean.getUserEmail() %>')" id="ddd">
+					<img src="./img/postLikeTrue.svg" align="top">
+					</a>
+				<%}else if(!plmgr.postLike(mbean.getUserEmail(), pbean.getPostId())){ %>
+					<a href="javascript:heart('<%=pbean.getPostId()%>,<%=mbean.getUserEmail() %>')" id="ddd">				
+					<img src="./img/postLikeFalse.svg" align="top">
+					</a>
+				<%} %> 
+			</td>
+			<td>
+			<a href="javascript:chat('<%=pbean.getPostId()%>')" id="ddd">
+				<img src="./img/postMessageFalse.svg" align="top">
+			</a>
+			</td>
+			<td>
+			<a href="javascript:share('<%=pbean.getPostId()%>')" id="ddd" class="sharebtn">
+				<img src="./img/postShare.svg" align="top">
+			</a>
+			</td>							
+		</tr>
+		<tr>
+			<td width="250" style="padding-left:10px;"><%=uibean.getUserNickName() %>님 외 <b><%=pbean.getLikeNum() %>명</b>이 좋아합니다.</td>
+		</tr>
+		<tr class="commenter" style="height:<%=commentCount*50%>px;">
+			<td colspan="3" width="500" style="padding-left:10px;"> 
+				<%
+				for(int j=0;j<clist.size();j++){
+					CommentBean cbean = clist.get(j);
+					if(cbean.getCommentParrent()!=null){
+						
+				%>
+				<div id="myDIV<%=cbean.getCommentParrent()%>" style="display:none; padding-top: 10px;">	
+				<c><%=cbean.getUserEmail()%></c>&nbsp;<c class="commentDetail"><%=cbean.getCommentDetail()%></c>
+				<br>
+				<c>&nbsp;&nbsp;&nbsp;&nbsp;<c style="font-size: 90%; color: #8e8e8e;"><%=cbean.getCommentDate()%></c>&nbsp;&nbsp; 
+				<%if(id2.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
+				<a href="javascript:cup('<%=cbean.getCommentId()%>')" id="box<%=cbean.getCommentId()%>" style="font-size: 90%; color: #8e8e8e;">수정</a><%}%>&nbsp;
+				<%if(id2.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
+				<a href="javascript:cdel('<%=cbean.getCommentId()%>,<%=pbean.getPostId()%>')" style="font-size: 90%; color: #8e8e8e;">삭제</a></c><%}%>&nbsp;
+				<br>
+				</div>
+				<%} else {%>
+					<b><%=cbean.getUserEmail()%></b>&nbsp;<c class="commentDetail" ><%=cbean.getCommentDetail()%></c>
+				<br>
+				<%if (cmgr.replycheck(cbean.getCommentId())) {%><a href="javascript:doDisplay('<%=cbean.getCommentId()%>');" style="font-size: 90%; color: #8e8e8e;" id="linkText<%=cbean.getCommentId()%>"><img src="img/postMessageReplyBtn.svg"/> 답글보기</a><%}%>&nbsp;<c style="font-size: 90%; color: #8e8e8e;"><%=cbean.getCommentDate()%></c>&nbsp;&nbsp; 
+				<a href="javascript:creply('<%=cbean.getCommentParrent()%>,<%=mbean.getUserEmail()%>,<%=pbean.getPostId()%>,<%=cbean.getCommentId()%>')" id="rep<%=cbean.getCommentId()%>" style="font-size: 90%; color: #8e8e8e;">답글</a> &nbsp;
+				<%if(id2.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
+				
+				<a href="javascript:cup('<%=cbean.getCommentId()%>')" id="box<%=cbean.getCommentId()%>" style="font-size: 90%; color: #8e8e8e;">수정</a><%}%>&nbsp;
+				
+				<%if(id2.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
+				<a href="javascript:cdel('<%=cbean.getCommentId()%>,<%=pbean.getPostId()%>')" style="font-size: 90%; color: #8e8e8e;">삭제</a></b><%}%>&nbsp;
+				<br>
+				<%} %>
+			
+		<%}%>
+			</td>
+		</tr>
+		
+		<tr>
+		
+			<td colspan="3" width="500">
+				<br>
+				<div class="asdf" style="padding-left: 10px">
+				
+				<img src="./img/postLikeCount.svg">&nbsp;<%=pbean.getLikeNum() %>&nbsp;
+				
+				<img src="./img/postMessageCount.svg">&nbsp;댓글<%=pbean.getCommentNum() %>&nbsp;개
+				<%
+				for(int j=0;j<38;j++){
+					%>
+					&nbsp;
+					<% 
+				}
+				%>
+				공유하기 <%=pbean.getShareNum() %> 회
+				</div>
+				<hr style="background-color: #d8d8d8">
+			</td>
+			
+		</tr>
+		
+		<tr>	
+			<td colspan="3" width="500" style="padding-top: 15px;">
+				<img src="./img/postMessageProfile.svg" class="postMessageProfile">&nbsp;
+				<input class="postTextbox" id="postTextbox" placeholder="댓글을 입력하세요." data-postid="<%=pbean.getPostId()%>" data-userEmail="<%=mbean.getUserEmail() %>"/>
+			</td>
+
+		</tr>
+
+		
+	</table>
+	
+	</div>       
+	<!-- 햄버거모달 -->
+	<div class="modal">
+    			<div>
+        			<a href="javascript:report('<%=pbean.getPostId()%>')"><span id="main-modal-text" style="color: #fd3c56; font-weight: bold;">신고하기</span></a><br>
+        			<hr style="background: #d8d8d8; height: 1px; border: 0;">
+        			<a href="javascript:share('<%=pbean.getPostId()%>')" class="sharebtn"><span id="main-modal-text">공유하기</span></a><br>
+        			<hr style="background: #d8d8d8; height: 1px; border: 0;">
+        			<a href="javascript:copyUrl('<%=pbean.getPostId()%>')"><span id="main-modal-text">링크복사</span></a><br>
+        			<hr style="background: #d8d8d8; height: 1px; border: 0;">
+        			<span id="main-modal-text" class="modal_close">취소</span>
+    			</div>
+	</div>
+	<%}%>   
 <!-- 화면꺼지게 -->
 <div class="overlay">
 	<!-- 만들기모달 -->
@@ -607,7 +773,7 @@
 <script src="js/main.js"></script>
 <script>
     window.onload = function() {
-    	ready('<%=id2%>','<%=ubean.getUserName()%>');
+    	ready('<%=id2%>','<%=mbean.getUserName()%>');
     };
 </script>
 </body>

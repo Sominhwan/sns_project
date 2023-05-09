@@ -1,12 +1,13 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="sns.UserinfoBean"%>
 <jsp:useBean id="mgr" class="sns.UserMgr"/>
+<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
 <%
 
 	String Name = (String)session.getAttribute("id");
 	String email = (String)session.getAttribute("userEmail");
 	UserinfoBean bean = mgr.getMember(email);
-
+	UserinfoBean mbean = umgr.getPMember(email);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
 
 %>
 
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="./css/delete.css" />
     <link rel="stylesheet" href="./css/profile.css"/>
     <link rel="stylesheet" href="./css/modal.css"/>
+    <link rel="stylesheet" href="css/message.css?after"/>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>       
     <script src="js/navbar.js"></script>    
     <title>회원 탈퇴</title>
@@ -47,12 +49,12 @@
 	        </form>
 	        <!-- 모달창 -->
 	        <div class="absol">
-	        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+	       <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
 	        <div id="alarm" class="alarm">
 	        <span class="alarmBalloon"></span>
 	        </div>
 	        </div>             
-	        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+	        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
 	    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     	</div>
 	</nav>
@@ -238,7 +240,12 @@ withdrawCheckbox.addEventListener('change', () => {
         <span class="footer_info4">&copy;2023 Social Net Work Project</span>
       </div>
     </footer>
-
+    <script src="js/message.js"></script>
+	<script>
+	    window.onload = function() {
+	    	ready('<%=email%>','<%=mbean.getUserName()%>');
+	    };
+	</script>
   </body>
   
   
