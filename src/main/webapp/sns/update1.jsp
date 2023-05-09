@@ -30,7 +30,8 @@ request.setCharacterEncoding("UTF-8");
       type="image/x-icon"
       href="./images/loginLogo.png"
     />
-     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>     
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="js/navbar.js"></script>      
     <script>
     function frmSubmit(){
@@ -97,15 +98,17 @@ request.setCharacterEncoding("UTF-8");
 	</style>
 
   </head>
-  <body>
+<div class="modal-wrapper"></div>
+<body style="overflow-x: hidden">
 	<nav>
     	<div class = "navbar">
          	<a href="javascript:goURL('Main.jsp','')"><img src="./images/mainLogo.png"  alt="Image Button"/></a>
 	     	<a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
 	        <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>	     	
 	     	<!-- 네브바 추가할것 !!!! -->
-		    <form method="post" action="searched.jsp">
-	        	<span><input type="text" class = "InputBase" placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
+		    <form method="post" id="navSearch" >
+	        	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
+	        	<input type="text" style="display:none;"/>
 	        </form>
 	        <!-- 모달창 -->
 	        <div class="absol">
@@ -118,8 +121,43 @@ request.setCharacterEncoding("UTF-8");
 	    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     	</div>
 	</nav>
-
-
+    <!-- 검색 창 -->
+    <!-- 네브바 추가할것 !!!! -->
+	<table class="userTable" id="userTable">
+		<tbody id="ajaxTable">
+	          	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>
+	<!-- 프로필 모달 -->
+	<table class="profile-modal" id="profile-modal" style="display: none">
+		<tbody id="innerProfile">
+			<tr onclick="location.href='profile.jsp'">
+				<td class="profile-td"><img class= "Profile"src="./images/mainProfileModalProfile.svg"></td>
+				<td class="profile-td2">프로필 보기</td>		
+    		</tr>   	   				
+			<tr onclick="location.href='update.jsp'">
+				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
+				<td class="profile-td2">개인 정보</td>		
+    		</tr> 		
+			<tr onclick="location.href='help.jsp'">
+				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
+				<td class="profile-td2">도움말</td>		
+    		</tr> 	
+			<tr onclick="showLogout()">			    
+				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg" id="show"></td>				   	
+				<td class="profile-td2">로그아웃</td>		
+    		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>	
+	<!-- 로그아웃 모달 -->	   
+	<div class="logout-modal" style="display: none" >
+	  <div class="bg" >
+	    <div class="logoutBox">
+	    	<div class="logoutBtn" style="cursor: pointer" onclick="logout()"><span id="logoutText">로그아웃</span></div>
+	    	<div class="logoutCancel" style="cursor: pointer" onclick="showLogout()"><span id="logoutCancelText">취소</span></div>
+	    </div>
+	  </div>    
+	</div>
 <button style="z-index: 1000;
 position: absolute;
 position:absolute;

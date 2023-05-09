@@ -175,9 +175,9 @@ UserinfoBean bean = mgr.getMember(email);
     background-color:
  #e0e0e0;"></div>
 
-	<div class="popup-container">
-		<div class="popup-content">
-			<span class="popup-real">정말 탈퇴하시겠어요?</span> <span class="pupup-info">탈퇴
+	<div class="popup-container2">
+		<div class="popup-content2">
+			<span class="popup-real">정말 탈퇴하시겠어요?</span> <span class="pupup-info2">탈퇴
 				버튼 선택 시 , 계정은 삭제되며 복구되지 않습니다.</span>
 			<button id="pupup-button-cencel">취소</button>
 			<button id="pupup-button-delete" onclick="document.emailCode.submit();">탈퇴</button>

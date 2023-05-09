@@ -7,6 +7,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id = "umgr" class = "sns.UserMgr"/>
 <jsp:useBean id = "pmgr" class = "sns.ProfileMgr"/>
+<jsp:useBean id="mgr" class="sns.UserinfoMgr"/>
 
 <%
 		String id= request.getParameter("id");
@@ -14,6 +15,7 @@
 			id= (String)session.getAttribute("userEmail");
 		}
 		String id2 = (String)session.getAttribute("userEmail");
+		UserinfoBean mbean = mgr.getPMember(id2);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,41 +30,46 @@
     <link rel="stylesheet" href="css/message.css?after"/>   
     <link type="text/css" rel="stylesheet" href="style.css"></link>     
     <link rel="shortcut icon" type="image/x-icon" href="images/mainLogo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <!-- Cropper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css"
+    />    
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 네브바 추가할것 !!!! -->
     <script src="js/navbar.js"></script>
     <script type="text/javascript">
-    	function save(){
-    		frm = document.postFrm;
-    		frm.action = "ProfileServlet";
-    		alert(frm.contents.value);
-    		frm.submit();
-    	}
-    	function photo(){
-    		frm2 = document.postPhoto;
-    		frm2.action = "ProfilePhotoServlet";
-    		//alert(frm2.photoId.value);
-    		frm2.submit();
-    	}
-    	function bgimage(){
-    		frm3 = document.postBgPhoto;
-    		frm3.action = "ProfileBgPhotoServlet";
-    		//alert(frm2.photoId.value);
-    		frm3.submit();
-    	}
-    	function update(){
-    		frm4 = document.updateProf
-    		frm4.action = "ProfileUpdateServlet";
-    		frm4.submit();
-    	}
-    	
-    	function goupdate(){
-    		
-    	}
+		function saveguest(){
+			frm = document.ProfilepostFrm;
+			frm.action = "ProfileServlet";
+			alert(frm.contents.value);
+			frm.submit();
+		}
+		function photo(){
+			frm2 = document.postPhoto;
+			frm2.action = "ProfilePhotoServlet";
+			//alert(frm2.photoId.value);
+			frm2.submit();
+		}
+		function bgimage(){
+			frm3 = document.postBgPhoto;
+			frm3.action = "ProfileBgPhotoServlet";
+			//alert(frm2.photoId.value);
+			frm3.submit();
+		}
+		function update(){
+			frm4 = document.updateProf
+			frm4.action = "ProfileUpdateServlet";
+			frm4.submit();
+		}
     </script>
 </head>
 <div class="modal-wrapper"></div>
-<body style="overflow-x: hidden">
+<body style="overflow-x: hidden; background-color: #fbfbfb">
 <!-------------------- 상단바 --------------------->
 <nav>
     <div class = "navbar">
@@ -75,12 +82,12 @@
         </form>
         <!-- 모달창 -->
         <div class="absol">
-        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=id2%>')" alt="Image Button" style="cursor: pointer"/>
         <div id="alarm" class="alarm">
         <span class="alarmBalloon"></span>
         </div>
         </div>             
-        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
     	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     </div>
 </nav>
@@ -117,7 +124,7 @@
             </a>
         </li>
         <%
-        	for(int i=0; i<23; i++){
+        	for(int i=0; i<27; i++){
         		%>
         		<br>
         		<%
@@ -137,7 +144,7 @@
         	<span class="leftintroduce">사이트맵 © 2023 Social Net Work Project</span>
         </dt>        
     </ul>
- 	<!-- 프로필 모달 -->
+	<!-- 프로필 모달 -->
 	<table class="profile-modal" id="profile-modal" style="display: none">
 		<tbody id="innerProfile">
 			<tr onclick="location.href='profile.jsp'">
@@ -148,16 +155,16 @@
 				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
 				<td class="profile-td2">개인 정보</td>		
     		</tr> 		
-			<tr>
+			<tr onclick="location.href='help.jsp'">
 				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
 				<td class="profile-td2">도움말</td>		
     		</tr> 	
-			<tr>
-				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg"></td>
+			<tr onclick="showLogout()">			    
+				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg" id="show"></td>				   	
 				<td class="profile-td2">로그아웃</td>		
     		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
 	    </tbody>
-	</table>   
+	</table> 
 <!-------------------- 메인페이지 --------------------->
 <!-- 검색 창 -->
 <!-- 네브바 추가할것 !!!! -->
@@ -221,16 +228,16 @@
 				<span id = "popup-header">방명록 작성</span>
 				<a id = "popupclose4" ><img src = "images/profilePopupClose.svg"> </a>
 			</div>
+			<form name = "ProfilepostFrm" method = "post">
 			<div class ="popup-body">
 				<div class = "popup-content">
-					<form name = "postFrm" method = "post">
 					<input type="hidden" name="userEmail" value="<%=id %>">
 					<textarea class = "popup-textarea" name = "contents" placeholder="방명록 작성 양식입니다.(공백 포함 50자까지 작성 가능)" maxlength = "50"></textarea>
-					</form>
 				</div>
 			</div>
+			</form>
 			<div class = "popup-bottom">
-				<button id = "popupclose" type = "submit" onclick = "javascript:save()"><img src = "images/profileCoverImageSelectBtn.svg"></button>
+				<button id = "popupclose" type = "submit" onclick = "javascript:saveguest()"><img src = "images/profileCoverImageSelectBtn.svg"></button>
 			</div>
 		</div>
 	</div>
@@ -381,7 +388,7 @@
             <!-- 프로필 -->
             <div class = "profile_content">
                 <div class = "area3" style="font-size: 22px;">
-                    <span class="Text-State-info">정보</span>
+                    <span class="Text-State-info" style="font-weight: bold;">정보</span>
                 </div>
                 <div class= "area4">
                 	<div class = "area4_0">
@@ -472,7 +479,7 @@
             <!--팔로우 부분-->
             <div class = "profile_follow">
 				<div class = "follow_area1" style="font-size: 22px;">
-                    <span class="Text-State-info">팔로우</span>
+                    <span class="Text-State-info" style="font-weight: bold;">팔로우</span>
                 </div>
                 <div class = "follow_area2">
                 	<% List<String> vlist = pmgr.followInfo(id);%>
@@ -504,47 +511,60 @@
         <div class = "area_right">
             <div class = "area_right_1">
                 <div class = "area3" style="font-size: 22px;">
-                    <span class="Text-State-info">게시물</span>
+                    <span class="Text-State-info" style="font-weight: bold;">게시물</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- 화면꺼지게 -->
-
 <div class="overlay">
 	<!-- 만들기모달 -->
 	<div class="makemodal">
 		<div class="maketexttitle">
 				<b>게시물 만들기</b><img src="./img/makePostCancelBtn.svg" class="makecancel">	
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<img src="./img/makePostImage.svg" class="imageposition">
 			<img src="./img/makePostVideo.svg" class="imageposition2"><br>
 			<h5 class="makebodytext">사진과 동영상을 선택하세요</h5>
-			<img src="./img/makePostSelectImage.svg" class="imageposition3">
-			<img src="./img/makePostSelectVideo.svg" class="imageposition4">
+			<img src="./img/makePostSelectImage.svg" class="imageposition3" style="cursor: pointer;">
+			<img src="./img/makePostSelectVideo.svg" class="imageposition4" style="cursor: pointer;">
 		</div> 				
   	</div>
   	<!-- 편집하기모달 -->
   	<form name="postFrm" method="post" action="PostInsertServlet" enctype="multipart/form-data" >
+  	<input type="hidden" name="userEmail" value="<%=mbean.getUserEmail()%>">
   	<div class="fixmodal">
 		<div class="maketexttitle">
-		&nbsp;&nbsp;<b>편집하기</b><img src="./img/makePostBackBtn.svg" class="makeBackBtn">
+		&nbsp;&nbsp;<b>편집하기</b><img src="./img/makePostBackBtn.svg" class="makeBackBtn" style="cursor: pointer;">
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
-			<b class="makepostBefore">Before</b>
-			<b class="makepostAfter">After</b>
-			<div class="choicepicture">
-				<!-- 크롭될이미지 -->
-				<input type="file" accept="image/*" class="imageInput" name="imageName">
+		    <img src="./img/makePostImage.svg" class="makePostImage">
+			<b class="makepostBefore" style="display: none">Before</b>
+			<b class="makepostAfter" style="display: none">After</b>
+			<!-- 크롭될이미지 -->
+			<div class="filebox">
+				<label for="imageInput">사진 선택</label> 
+		    	<input type="file" accept="image/*" class="imageInput" name="imageName" id="imageInput">		
+		    </div>	
+			<div class="choicepicture" style="display: none">
+				<div class="result"></div>
 			</div>
-			<div class="choiceafterpicture">
-        			<img id="croppedImage" src="" alt="Cropped Image">
+			<div class="choiceafterpicture" style="display: none">
+				<img class="cropped" src="./img/binImage.svg" alt="" />	
 			</div>
-			<img src="./img/makePostInsertBtn.svg" class="makepostInsert">
+			<!-- input file -->
+      		<div class="box" style="display: none">
+        		<div class="options hide">
+          		<input type="number" class="img-w" value="300" min="100" max="400" style="display: none"/>
+        		</div>
+        		<!-- save btn -->
+        		<button class="btn save hide" id="saveBtn" style="border-radius: 5px;cursor: pointer;">저장하기</button>
+      		</div>
+			<img src="./img/makePostInsertBtn.svg" class="makepostInsert" style="display: none">
 		</div>				
   	</div>
   	</form>
@@ -552,9 +572,9 @@
   	<form name="videoFrm" method="post" action="VideoPostInsertServlet" enctype="multipart/form-data" >
   	<div class="videomodal">
 		<div class="maketexttitle">
-		&nbsp;&nbsp;<b>동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn">
+			<b style="position:relative;  margin-left: 10px;">동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn" style="cursor: pointer;">
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<h5 class="videotitle">동영상을 선택하세요</h5>
 			<div class="choicevideo">
@@ -569,19 +589,19 @@
 		<div class="maketexttitle">
 			<b class="postcomtitle">게시물이 올라갔습니다.</b>
 		</div>
-		<hr>
+		<hr style="background: #d8d8d8;height: 1px;border:0;">
 		<div class="makebody">
 			<img src="./img/makePostCheckIcon.svg" class="makepostComple">
 			<br>
-			<b class="bodycomple">게시물이 올라갔습니다.</b>
+			<span class="bodycomple">게시물이 올라갔습니다.</span>
 			<br>
-			<img src="./img/makePostCheckBtn.svg" class="makepostCheck">
+			<img src="./img/makePostCheckBtn.svg" class="makepostCheck" style="cursor: pointer;">
 		</div>				
   	</div>
 </div>
 
 <!-- js 추가 -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>    
 <script src="js/profile.js"></script>
 <script src="js/message.js"></script>
 <script src="js/main.js"></script>

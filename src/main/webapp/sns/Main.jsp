@@ -38,6 +38,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css"
     />
+    <link rel="stylesheet" href="css/message.css?after"/>
  	<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
  	<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -61,12 +62,12 @@
         </form>
         <!-- 모달창 -->
         <div class="absol">
-        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
         <div id="alarm" class="alarm">
         <span class="alarmBalloon"></span>
         </div>
         </div>             
-        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
     	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     </div>	   
 </nav>
@@ -110,7 +111,7 @@
             </a>
         </li>                      
         <%
-        	for(int i=0; i<23; i++){
+        	for(int i=0; i<27; i++){
         		%>
         		<br>
         		<%
@@ -141,16 +142,25 @@
 				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
 				<td class="profile-td2">개인 정보</td>		
     		</tr> 		
-			<tr>
+			<tr onclick="location.href='help.jsp'">
 				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
 				<td class="profile-td2">도움말</td>		
     		</tr> 	
-			<tr>
-				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg"></td>
+			<tr onclick="showLogout()">			    
+				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg" id="show"></td>				   	
 				<td class="profile-td2">로그아웃</td>		
     		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
 	    </tbody>
-	</table>    
+	</table>
+<!-- 로그아웃 모달 -->	   
+<div class="logout-modal" style="display: none" >
+  <div class="bg" >
+    <div class="logoutBox">
+    	<div class="logoutBtn" style="cursor: pointer" onclick="logout()"><span id="logoutText">로그아웃</span></div>
+    	<div class="logoutCancel" style="cursor: pointer" onclick="showLogout()"><span id="logoutCancelText">취소</span></div>
+    </div>
+  </div>    
+</div>
     <!-- <div style="overflow:scroll; height:1900px;"> -->
 <div data-role="page">
     <div class="aaa">
@@ -476,5 +486,11 @@
     <!-- js 추가 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>    
   	<script src="js/main.js"></script>
+  	<script src="js/message.js"></script>
+  	<script>
+    window.onload = function() {
+    	ready('<%=email%>','<%=mbean.getUserName()%>');
+    };
+	</script>
 </body>
 </html>

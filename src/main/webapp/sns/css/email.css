@@ -145,7 +145,7 @@ input:focus{
 
 }
 
-.popup-container {
+.popup-container2 {
 	z-index:1000;
     display: none;
     position: fixed;
@@ -156,7 +156,7 @@ input:focus{
     background-color: rgba(0, 0, 0, 0.5);
   }
   
-  .popup-content {
+  .popup-content2 {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -165,7 +165,7 @@ input:focus{
     padding: 20px;
     border-radius: 5px;
     width: 272px;
-    height: 400px;
+    height: 265px;
   }
 
 #pupup-button-cencel{
@@ -199,7 +199,7 @@ input:focus{
 
 
 
-.pupup-info {
+.pupup-info2 {
     position: absolute;
     width: 182px;
     height: 43px;

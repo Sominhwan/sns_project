@@ -570,7 +570,36 @@ public class UserMgr {
 	        return universityList;
 	    }	
 	
-	
+	    public UserinfoBean getInfo(String userEmail) {
+	        Connection con = null;
+	        PreparedStatement pstmt = null;
+	        ResultSet rs = null;
+	        String sql = null;
+	        UserinfoBean bean = new UserinfoBean();
+	        try {
+	           con = pool.getConnection();
+	           sql = "select * from userinfo where userEmail = ?";
+	           pstmt = con.prepareStatement(sql);
+	           pstmt.setString(1, userEmail);
+	           rs = pstmt.executeQuery();
+	           if(rs.next()) {
+	              bean.setUserName(rs.getString("userName"));
+	              bean.setUserGender(rs.getString("userGender"));
+	              bean.setUserNickName(rs.getString("userNickName"));
+	              bean.setUserEmail(rs.getString("userEmail"));
+	              bean.setUserPN(rs.getString("userPN"));
+	              bean.setUserSchool(rs.getString("userSchool"));
+	              bean.setUserAddress(rs.getString("userAddress"));
+	              bean.setUserSocial(rs.getString("userSocial"));
+	              bean.setUserImage(rs.getString("userImage"));
+	           }
+	        } catch (Exception e) {
+	           e.printStackTrace();
+	        } finally {
+	           pool.freeConnection(con, pstmt, rs);
+	        }
+	        return bean;
+	     }	
 	// 임시 데이터 저장
 	public static void main(String []args) {
 		UserMgr mgr= new UserMgr();

@@ -265,11 +265,11 @@ function addRoomId(roomId,Email,image,name){
 	'<div id ="'+Email+'profileImg" style = "float:left; width: 58px; height:58px;">' +
 	'<img src = "'+image+'" style = "border-radius : 50%; width: 58px; height:58px; border: solid 2px #dedede;">'+
 	'</div>' +
-    '<div id="'+roomId+'" class="'+name+'" onclick="handleChatClick(event)" style = "margin-left:80px;>'+
+    '<div id="'+roomId+'" class="'+name+'" onclick="handleChatClick(event)" style = "margin-left:80px; cursor: pointer">'+
     '<div id="roomName">'+name+ 
     	'<div id="'+roomId+'roomAlarm" style="float:right;"></div>'+
     '</div>'+
-    '<div id="'+roomId+'recentContent" style="height: 21px; margin-top: 16px;margin-bottom: 16px;  margin-left:80px; color: #a4a4a4;"></div>'+
+    '<div id="'+roomId+'recentContent" style="height: 21px; margin-top: 16px;margin-bottom: 16px;color: #a4a4a4;"></div>'+
     '</div>'+
     '<hr style="background-color: rgba(0,0,0,0.1); border:none; height : 3px;">'
   );
@@ -560,9 +560,9 @@ function inviteChat(roomId, email){
 function openModal() {
   modal.innerHTML = `
   <link href="css/profile.css" rel="stylesheet">
-    <div class="modal">
-      <div class="modal-content">
-      <div class="header">
+    <div class="msmodal">
+      <div class="msmodal-content">
+      <div class="msheader">
         <h2>채팅</h2>
          <button type="button" class="messageInvite" id ="messageInvite" onclick="chatInvite();stopRecentChat();stopAddRoomAlarmNum();chatInviteList(userEmail)"><img id="messageBackBtn" src="images/messageInvite.svg"></button>
         </div>
@@ -580,9 +580,9 @@ function openModal() {
 function chatInvite() {
   modal.innerHTML = `
   <link href="css/profile.css" rel="stylesheet">
-    <div class="modal">
-      <div class="modal-content">
-      <div class="header">
+    <div class="msmodal">
+      <div class="msmodal-content">
+      <div class="msheader">
         <h2>대화상대 초대</h2>
          <button type="button" class="messageBack" id ="messageBack" onclick="inviteBack(userEmail)"><img id="messageBackBtn" src="images/messageBackBtn.svg"></button>
         </div>
@@ -600,8 +600,8 @@ function chatInvite() {
 function chat(Email) {
   modal.innerHTML = `
   <link href="css/profile.css" rel="stylesheet">
-    <div class="modal">
-      <div class="header">
+    <div class="msmodal">
+      <div class="msheader">
         <h4 id="audience">`+
         Email+
         `</h4>
@@ -713,9 +713,9 @@ function closeFollow(){
 function openFollower(){
 	modal.innerHTML = `
   <link href="css/profile.css" rel="stylesheet">
-    <div class="modal">
-      <div class="modal-content">
-      <div class="header">
+    <div class="msmodal">
+      <div class="msmodal-content">
+      <div class="msheader">
         <h2>알림</h2>
         </div>
 		<div id="followerList"> 

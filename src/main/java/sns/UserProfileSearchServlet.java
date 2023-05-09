@@ -17,17 +17,7 @@ import com.google.gson.JsonIOException;
 @WebServlet("/sns/UserProfileSearch")
 public class UserProfileSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-/*	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8"); 
-		response.setContentType("text/html; charset=utf-8"); 
-		String userInputNickName = request.getParameter("userInputNickName");
-		System.out.println(userInputNickName);
-		if(userInputNickName!=null) {
-			response.getWriter().write(getJSON2(userInputNickName));
-		}
-	}*/
-	
+    	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8"); 
 		response.setContentType("text/html; charset=utf-8"); 
@@ -60,23 +50,4 @@ public class UserProfileSearchServlet extends HttpServlet {
 		}	
 		return sendObject.toString();
 	}
-
-/*	@SuppressWarnings("unchecked")
-	public String getJSON2(String userInputNickName) {
-		if(userInputNickName==null) 
-			userInputNickName = "";
-	
-		UserMgr mgr = new UserMgr();
-		String userEmail = mgr.getSearchUserEmail(userInputNickName);
-		JSONObject sendObject = new JSONObject();
-		JSONArray sendArray = new JSONArray();
-		try {
-		    JSONObject informationObject = new JSONObject();
-		    informationObject.put("userEmail",userEmail);
-		    sendObject.put("result",sendArray);
-		} catch (JsonIOException e) {
-		    e.printStackTrace();
-		}	
-		return sendObject.toString();
-	}*/
 }

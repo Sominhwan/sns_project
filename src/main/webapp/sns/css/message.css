@@ -16,7 +16,7 @@ body {
     z-index: 999;
 }
  
-.modal {
+.msmodal {
     background: #fff;
     padding: 14px 16px;
     border-radius: 4px;
@@ -29,7 +29,7 @@ body {
 }
  
  
-.modal-title {
+.msmodal-title {
     font-size: 24px;
     font-weight: bold;
 }
@@ -58,7 +58,7 @@ body {
   outline: none;
 }
 
-.header {
+.msheader {
   position:relative;
   display: flex;
   justify-content: space-between;

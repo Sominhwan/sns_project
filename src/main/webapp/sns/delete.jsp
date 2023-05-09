@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="./css/delete.css" />
     <link rel="stylesheet" href="./css/profile.css"/>
     <link rel="stylesheet" href="./css/modal.css"/>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>       
     <script src="js/navbar.js"></script>    
     <title>회원 탈퇴</title>
     <style>
@@ -33,7 +34,8 @@
       href="./images/loginLogo.png"
     />
   </head>
-  <body>
+<div class="modal-wrapper"></div>
+<body style="overflow-x: hidden">
 	<nav>
     	<div class = "navbar">
          	<a href="javascript:goURL('Main.jsp','')"><img src="./images/mainLogo.png"  alt="Image Button"/></a>
@@ -54,7 +56,43 @@
 	    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     	</div>
 	</nav>
-
+    <!-- 검색 창 -->
+    <!-- 네브바 추가할것 !!!! -->
+	<table class="userTable" id="userTable">
+		<tbody id="ajaxTable">
+	          	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>
+	<!-- 프로필 모달 -->
+	<table class="profile-modal" id="profile-modal" style="display: none">
+		<tbody id="innerProfile">
+			<tr onclick="location.href='profile.jsp'">
+				<td class="profile-td"><img class= "Profile"src="./images/mainProfileModalProfile.svg"></td>
+				<td class="profile-td2">프로필 보기</td>		
+    		</tr>   	   				
+			<tr onclick="location.href='update.jsp'">
+				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
+				<td class="profile-td2">개인 정보</td>		
+    		</tr> 		
+			<tr onclick="location.href='help.jsp'">
+				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
+				<td class="profile-td2">도움말</td>		
+    		</tr> 	
+			<tr onclick="showLogout()">			    
+				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg" id="show"></td>				   	
+				<td class="profile-td2">로그아웃</td>		
+    		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
+	    </tbody>
+	</table>	
+	<!-- 로그아웃 모달 -->	   
+	<div class="logout-modal" style="display: none" >
+	  <div class="bg" >
+	    <div class="logoutBox">
+	    	<div class="logoutBtn" style="cursor: pointer" onclick="logout()"><span id="logoutText">로그아웃</span></div>
+	    	<div class="logoutCancel" style="cursor: pointer" onclick="showLogout()"><span id="logoutCancelText">취소</span></div>
+	    </div>
+	  </div>    
+	</div>
       <div class="go-update">
       <a href="update.jsp" id="go" style="
     z-index: 200;

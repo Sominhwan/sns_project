@@ -39,6 +39,28 @@ public class FriemdmanagerMgr {
 		}
 		
 	}
+	//친구 추가
+		public void followfirend2(String userEmail,String followEmail) {
+			Connection con=null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			try {
+				FriendmanagerBean bean=new FriendmanagerBean();
+				con=pool.getConnection();
+				sql="insert into friendmanager(userEmail,friendEmail,friendSign) values(?,?,?)";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1,userEmail);
+				pstmt.setString(2,followEmail);
+				pstmt.setInt(3, 1);
+				pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt);
+			}
+			
+		}
 	//친구에서 삭제
 		public void delFriend(String userEmail,String followEmail) {
 			Connection con=null;

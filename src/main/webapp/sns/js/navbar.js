@@ -92,5 +92,32 @@ $(document).mouseup(function (e){
 	}
 });
 
-/*$(document).ready(function () {
-});*/
+/* 로그아웃 모달 이벤트 */
+function showLogout(){
+	if ($('.logout-modal').css('display') == 'block') {
+		document.body.style.removeProperty('overflow');
+		$('.logout-modal').css('display', 'none');
+    } else {
+		var LayerPopup = $("#profile-modal");
+		LayerPopup.hide();
+		document.body.style.overflow = 'hidden';
+        $('.logout-modal').css('display', 'block');                  	    
+    }		
+}
+
+function logout(){
+	$.ajax({
+		url : "UserLogout",
+        type : "post",
+        dataType : "json",
+        global: false,
+        success : function(obj){
+			var url = obj.result;
+			location.replace(url);
+        },
+        error : function(xhr, status, error){
+ 
+        }
+   });		
+}
+
