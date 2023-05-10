@@ -1,6 +1,9 @@
+<%@page import="sns.UserinfoBean"%>
+<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%
-		
+	String email = (String)session.getAttribute("userEmail");	
+	UserinfoBean mbean = umgr.getPMember(email);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
 %>
 
 <!DOCTYPE html>
@@ -9,10 +12,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/help.css" />
+    
     <link rel="stylesheet" href="./css/profile.css"/>
+    <link rel="stylesheet" href="./css/help.css" />
     <link rel="stylesheet" href="./css/modal.css"/>
     <link rel="stylesheet" href="./css/navbar.css"/>
+    <link rel="stylesheet" href="css/message.css?after"/>
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  	<script src="js/navbar.js"></script>    
     <title>사용법</title>
@@ -22,7 +27,8 @@
       href="./images/loginLogo.png"
     />
   </head>
-  <body>
+<div class="modal-wrapper"></div>
+<body style="overflow-x: hidden">
     <nav>
     <div class = "navbar">
         <img src="images/mainLogo.png" alt="Image Button"/>
@@ -33,12 +39,12 @@
         </form>
         <!-- 모달창 -->
         <div class="absol">
-        <img id = "mainMessageFalse" src="./images/mainMessageFalse.png" alt="Image Button" style="cursor: pointer"/>
+<img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
         <div id="alarm" class="alarm">
         <span class="alarmBalloon"></span>
         </div>
         </div>             
-        <img id = "mainAlarmFalse" src="./images/mainAlarmFalse.png" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
     	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     </div>	   
 </nav>
@@ -89,25 +95,30 @@
 
     <!-- 비디오 삽입 -->
     <video id="player" style="position: absolute; top:101px; left:380px;" width="1500" height="800"  controls>
-      <source src="./images/test.mkv"/>
+      <source src="./images/test.mp4"/>
     </video>
 
     <!-- seekToTime() 함수 정의 -->
+    <script src="js/message.js"></script>
+    
     <script>
       var player = document.getElementById("player");
 
       function seekToTime(time) {
         player.currentTime = time;
       }
+      window.onload = function() {
+      	ready('<%=email%>','<%=mbean.getUserName()%>');
+      };
     </script>
 
 
     <!-- 1분으로 이동하는 링크 -->
-    <a class="time1-1" href="#" style="text-decoration: none;" onclick="seekToTime(60)" style="color: #0069D9 !important;">1:00</a>
-    <a class="time1-2" href="#" style="text-decoration: none;" onclick="seekToTime(90)" style="color: #0069D9 !important;">1:30</a>
-    <a class="time1-3" href="#" style="text-decoration: none;" onclick="seekToTime(120)" style="color: #0069D9 !important;">2:00</a>
-    <a class="time1-4" href="#" style="text-decoration: none;" onclick="seekToTime(150)" style="color: #0069D9 !important;">2:30</a>
-    <a class="time1-5" href="#" style="text-decoration: none;" onclick="seekToTime(180)" style="color: #0069D9 !important;">3:00</a>
+    <a class="time1-1" href="#" style="text-decoration: none;" onclick="seekToTime(60)">1:00</a>
+    <a class="time1-2" href="#" style="text-decoration: none;" onclick="seekToTime(90)">1:30</a>
+    <a class="time1-3" href="#" style="text-decoration: none;" onclick="seekToTime(120)">2:00</a>
+    <a class="time1-4" href="#" style="text-decoration: none;" onclick="seekToTime(150)">2:30</a>
+    <a class="time1-5" href="#" style="text-decoration: none;" onclick="seekToTime(180)">3:00</a>
   	
   </body>
 </html>
