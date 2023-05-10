@@ -81,16 +81,15 @@
 	</div>		    
     <div class="side-bar"></div>
     <span class="Help1">PhoTalk 사용법</span>
-    <span class="time1">PhoTalk 사용법:</span>
-    <span class="time2">PhoTalk 사용법:</span>
-    <span class="time3">PhoTalk 사용법:</span>
-    <span class="time4">PhoTalk 사용법:</span>
-    <span class="time5">PhoTalk 사용법:</span>
-    <span class="time6">PhoTalk 사용법:</span>
+    <span class="time1">PhoTalk 회원가입</span>
+    <span class="time2">PhoTalk 프로필 </span>
+    <span class="time3">PhoTalk 게시물 </span>
+    <span class="time4">PhoTalk 회원정보 </span>
+    <span class="time5">PhoTalk 회원 탈퇴</span>
 
     <!-- 비디오 삽입 -->
     <video id="player" style="position: absolute; top:101px; left:380px;" width="1500" height="800"  controls>
-      <source src="./images/test.mp4" type="video/mp4" />
+      <source src="./images/test.mkv"/>
     </video>
 
     <!-- seekToTime() 함수 정의 -->
@@ -104,12 +103,11 @@
 
 
     <!-- 1분으로 이동하는 링크 -->
-    <a class="time1-1" href="#" style="text-decoration: none;" onclick="seekToTime(60)">1:00</a>
-    <a class="time1-2" href="#" style="text-decoration: none;" onclick="seekToTime(120)">2:00</a>
-    <a class="time1-3" href="#" style="text-decoration: none;" onclick="seekToTime(180)">3:00</a>
-    <a class="time1-4" href="#" style="text-decoration: none;" onclick="seekToTime(240)">4:00</a>
-    <a class="time1-5" href="#" style="text-decoration: none;" onclick="seekToTime(300)">5:00</a>
-    <a class="time1-6" href="#" style="text-decoration: none;" onclick="seekToTime(360)">6:00</a>
+    <a class="time1-1" href="#" style="text-decoration: none;" onclick="seekToTime(60)" style="color: #0069D9 !important;">1:00</a>
+    <a class="time1-2" href="#" style="text-decoration: none;" onclick="seekToTime(90)" style="color: #0069D9 !important;">1:30</a>
+    <a class="time1-3" href="#" style="text-decoration: none;" onclick="seekToTime(120)" style="color: #0069D9 !important;">2:00</a>
+    <a class="time1-4" href="#" style="text-decoration: none;" onclick="seekToTime(150)" style="color: #0069D9 !important;">2:30</a>
+    <a class="time1-5" href="#" style="text-decoration: none;" onclick="seekToTime(180)" style="color: #0069D9 !important;">3:00</a>
   	
   </body>
 </html>

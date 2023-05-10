@@ -222,7 +222,7 @@
             </div>
         <div class = area_up7 <% if (!id.equals((String)session.getAttribute("userEmail"))) { %>style="display:none"<% } %>>
             <div>
-                <button type="button" class = "profileBtn3" id="show" style="cursor: pointer;">
+                <button onclick="show()" type="button" class = "profileBtn3" id="show" style="cursor: pointer;">
                 <img src="images/profileBtn3.png" class = "profilepng">
                 </button>
   				<button type="button" class="profileBtn2" id="show2" style="cursor: pointer;"><img src="images/profileBtn2.png" class="profilepng"></button>

@@ -309,6 +309,10 @@
  		    	const replyBox = document.createElement('input');
  		   		replyBox.type = 'text';
  		   		replyBox.style.borderRadius = '10px';
+ 		   		replyBox.style.border = 'none';
+ 		   		replyBox.style.backgroundColor = '#f8f8f8';
+ 		   		replyBox.style.fontSize = '12px';
+ 		   		replyBox.style.padding = '2px';
  		   		replyBox.style.width='120px';
  		   		replyBox.onclick = function(event) {
  		       		event.stopPropagation();
@@ -316,21 +320,15 @@
  		    	const replydelete = document.createElement('input');
  		   		replydelete.type = 'button';
  		  		replydelete.value = '취소';
- 		  		replydelete.style.border='1px solid skyblue';
  		  		replydelete.style.backgroundColor='rgba(0,0,0,0)';
- 		  		replydelete.style.color='skyblue';
- 		  		replydelete.style.borderRadius='5px';
- 		  		//마우스 올릴시 기능
- 		  		replydelete.addEventListener('mouseover', function() {
- 		  	      replydelete.style.color = 'white';
- 		  	      replydelete.style.backgroundColor = 'skyblue';
- 		  	    });
- 		  	    replydelete.addEventListener('mouseout', function() {
- 		  	      replydelete.style.color = 'skyblue';
- 		  	      replydelete.style.backgroundColor = 'rgba(0,0,0,0)';
- 		  	    });
+ 		  		replydelete.style.color='#8e8e8e';
+ 		  		replydelete.style.cursor='pointer';
+ 		  		replydelete.style.textDecorationLine='underline';
+ 		  		replydelete.style.border='none';
  		  	    
  		  	    
+ 	
+ 		  		
  		 		replydelete.onclick = function() {
  		    		parentElement.innerHTML = "답글"; 
  		    		isReplyBoxAdded = true;
@@ -339,20 +337,12 @@
  		    	const replysave = document.createElement('input');
  		   		replysave.type = 'button';
  		  		replysave.value = '저장';
- 		  		replysave.style.border='1px solid skyblue';
  		  		replysave.style.backgroundColor='rgba(0,0,0,0)';
- 		  		replysave.style.color='skyblue';
- 		  		replysave.style.borderRadius='5px';
- 		  		//마우스 올릴시 기능
- 		  		replysave.addEventListener('mouseover', function() {
- 		  	      replysave.style.color = 'white';
- 		  	      replysave.style.backgroundColor = 'skyblue';
- 		  	    });
- 		  	    replysave.addEventListener('mouseout', function() {
- 		  	      replysave.style.color = 'skyblue';
- 		  	      replysave.style.backgroundColor = 'rgba(0,0,0,0)';
- 		  	    });
- 		  	    
+ 		  		replysave.style.color='#8e8e8e';
+ 		  		replysave.style.cursor='pointer';
+ 		  		replysave.style.textDecorationLine='underline';
+ 		  		replysave.style.border='none';
+    
  		 		replysave.onclick = function() {
  		    		var replyDetail = replyBox.value;
  		      		$.ajax({
